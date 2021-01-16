@@ -1,0 +1,107 @@
+// Example from a View from Jenzabar on Microsoft SQL Server
+
+SELECT CONCAT('<person>
+    <sourcedid>
+        <source>JZMoodleEnrollment</source>
+        <id>', ce.PersonID , '</id>
+        <userid authenticationtype="', IIF(u.auth IS NULL, 'manual', u.auth),'">', LOWER(ce.UserName), '</userid>
+        <email>', LOWER(ce.UserEmail), '</email>
+    </sourcedid>
+    <name>
+        <fn>', CONCAT(ce.UserFirstName, ' ', ce.UserLastName), '</fn>
+        <n>
+            <family>', ce.UserLastName, '</family>
+            <given>', ce.UserFirstName, '</given>
+        </n>
+    </name>
+</person>
+<person recstatus="2">
+    <sourcedid>
+        <source>JZMoodleEnrollment</source>
+        <id>', ce.PersonID , '</id>
+        <userid>', LOWER(ce.UserName), '</userid>
+        <email>', LOWER(ce.UserEmail), '</email>
+    </sourcedid>
+    <name>
+        <fn>', CONCAT(ce.UserFirstName, ' ', ce.UserLastName), '</fn>
+        <n>
+            <family>', ce.UserLastName, '</family>
+            <given>', ce.UserFirstName, '</given>
+        </n>
+    </name>
+</person>
+<membership>
+    <sourcedid>
+        <source>JZMoodleEnrollment</source>
+        <id>', ce.CourseNumber, '</id>
+    </sourcedid>
+    <member>
+        <sourcedid>
+            <source>JZMoodleEnrollment</source>
+            <id>', ce.PersonID, '</id>
+        </sourcedid>
+        <role roletype="01">
+            <status>1</status>
+                <timeframe>
+                    <begin restrict="', IIF(ce.CreationTime IS NULL, 0, 1), '">', FORMAT(ce.CreationTime, 'yyyy-MM-dd', 'en-US'), '</begin>
+                    <end restrict="', IIF(ce.TerminationTime IS NULL, 0, 1), '">', IIF(ce.TerminationTime IS NULL, '', CONCAT(FORMAT(ce.TerminationTime, 'yyyy-MM-dd - ', 'en-US'), FORMAT(ce.TerminationTime, 'HH', 'en-US'), ':', FORMAT(ce.TerminationTime, 'mm', 'en-US'), ':', FORMAT(ce.TerminationTime, 'ss', 'en-US'))), '</end> 
+                    <adminperiod>', CONCAT(IIF(ce.TerminationTime IS NULL, 'Current', CONCAT(FORMAT(ce.CreationTime, 'yyyy', 'en-US'), ' - ', FORMAT(ce.TerminationTime, 'yy', 'en-US'))), ' Administration Period') ,'</adminperiod>
+                </timeframe>
+            <extension>
+            </extension>
+        </role>
+    </member>
+</membership>') AS '<!-- data -->'
+FROM mdl_block_ce_enrollinfo ce
+LEFT JOIN mdl_user u ON ce.UserName = u.username
+
+
+
+
+
+//Example from Moodle itself in mySQL
+
+(SELECT CONCAT("<person>
+    <sourcedid>
+        <source>LSUMoodleEnrollment</source>
+        <id>", u.idnumber, "</id>
+        <userid>", u.username, "</userid>
+        <email>", u.email, "</email>
+    </sourcedid>
+    <name>
+        <fn>", CONCAT(u.firstname, " ", u.lastname), "</fn>
+        <n>
+            <family>", u.lastname, "</family>
+            <given>", u.firstname, "</given>
+        </n>
+    </name>
+</person>
+<membership>
+    <sourcedid>
+        <source>LSUMoodleEnrollment</source>
+        <id>2021First SpringVCS73004800</id>
+    </sourcedid>
+    <member>
+        <sourcedid>
+            <source>LSUMoodleEnrollment</source>
+            <id>", u.idnumber, "</id>
+        </sourcedid>
+        <role roletype=\"01\">
+            <status>", IF(stu.status='enrolled', 1, 2), "</status>
+            <extension>
+                <cohort>", CONCAT("LSU ", cou.department, " ", cou.cou_number, " ", sec.sec_number), "</cohort>
+            </extension>
+        </role>
+    </member>
+</membership>") AS "<!-- data -->"
+FROM {user} u
+    INNER JOIN {enrol_ues_students} stu ON u.id = stu.userid
+    INNER JOIN {enrol_ues_sections} sec ON stu.sectionid = sec.id
+    INNER JOIN {enrol_ues_semesters} sem ON sem.id = sec.semesterid
+    INNER JOIN {enrol_ues_courses} cou ON cou.id = sec.courseid
+    INNER JOIN {course} c ON c.idnumber = sec.idnumber
+WHERE sec.idnumber IS NOT NULL
+    AND sec.idnumber <> ""
+    AND u.deleted = 0
+    AND CONCAT(sem.year, " ", sem.name, " ", cou.department, " ", cou.cou_number, " ", sec.sec_number) IN (
+"2021 Spring VCS 7300 001"))

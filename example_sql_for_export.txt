@@ -1,3 +1,9 @@
+// Example to grab all users as CSV from Moodle.
+
+SELECT * FROM mdl_user
+
+
+
 // Example from a View from Jenzabar on Microsoft SQL Server
 
 SELECT CONCAT('<person>

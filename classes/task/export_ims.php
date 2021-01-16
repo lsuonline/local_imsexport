@@ -18,14 +18,9 @@
  * A scheduled task.
  *
  * The only imsexport function.
- * For every item that is weighted NATURAL extra credit in a non-excluded semester.
- * Sets the aggregationcoef to 1
- * Sets the aggregationcoef2 to 0
- * Sets the weightoverride to 1
- * Sets the needsupdate flag to 1
  *
  * @package    local_imsexport
- * @copyright  2017 Robert Russo, Louisiana State University
+ * @copyright  2021 Robert Russo, Louisiana State University
  */
 
 namespace local_imsexport\task;

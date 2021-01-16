@@ -20,10 +20,11 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Ensure the user is not trying to access this directly.
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020011400;
+$plugin->version = 2021011400;
 $plugin->requires = 2015111600;
 $plugin->component = 'local_imsexport';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0a';
+$plugin->release = '1.0';

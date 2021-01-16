@@ -14,14 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * The local_imsexport lang file.
+ *
+ * @package    local_imsexport
+ * @copyright  2021 Robert Russo, Louisiana State University
+ */
+
+// The plugin name and description.
 $string['pluginname'] = "IMS XML Exporter";
 $string['pluginname_desc'] = "Periodically exports IMS XML from Moodle.";
 
-// Task.
+// The name of the task.
 $string['export_ims_task'] = 'Export IMS XML';
 
-// Settings.
+// The strings for the Settings.
 $string['ims_xml_sql'] = 'IMS SQL';
-$string['ims_xml_sql_desc'] = 'SQL for IMS generation. Should match your desired file format.';
+$string['ims_xml_sql_desc'] = 'SQL for file generation. Should match your desired file format.';
 $string['ims_xml_filename'] = 'File name';
-$string['ims_xml_filename_desc'] = 'Relative to your moodledata folder. Do not worry about the leading slash.';
+$string['ims_xml_filename_desc'] = 'Ensure your webserver can write to the location.';

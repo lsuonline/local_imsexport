@@ -22,18 +22,23 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// Make sure the user can config moodle.
 if ($hassiteconfig) {
 
+    // Set up the main settings page.
     $settings = new admin_settingpage('local_imsexport', get_string('pluginname', 'local_imsexport'));
 
+    // Add this to the nav tree.
     $ADMIN->add('localplugins', $settings);
 
+    // Add the header to the settings page.
     $settings->add(
         new admin_setting_heading('local_imsexport_header', '',
             get_string('pluginname_desc', 'local_imsexport')
         )
     );
 
+    // Add the filename setting.
     $settings->add(
         new admin_setting_configtext('local_imsexport_filename',
             get_string('ims_xml_filename', 'local_imsexport'),
@@ -42,6 +47,7 @@ if ($hassiteconfig) {
         )
     );
 
+    // Add the SQL setting.
     $settings->add(
         new admin_setting_configtextarea('local_imsexport_sql',
             get_string('ims_xml_sql', 'local_imsexport'),
@@ -49,5 +55,4 @@ if ($hassiteconfig) {
 	    'Insert SQL here' //DEFAULT
         )
     );
-
 }
